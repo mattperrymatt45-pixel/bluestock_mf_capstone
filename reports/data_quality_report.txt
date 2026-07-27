@@ -1,0 +1,32 @@
+BLUESTOCK FINTECH - Day 1 Data Quality Report
+======================================================================
+
+Per-dataset summary
+----------------------------------------------------------------------
+                     dataset  rows  columns  null_cells  duplicate_rows
+          01_fund_master.csv    40       15           0               0
+          02_nav_history.csv 46000        3           0               0
+    03_aum_by_fund_house.csv    90        5           0               0
+  04_monthly_sip_inflows.csv    48        6          12               0
+     05_category_inflows.csv   144        3           0               0
+ 06_industry_folio_count.csv    21        6           0               0
+   07_scheme_performance.csv    40       19           0               0
+08_investor_transactions.csv 32778       13           0               0
+   09_portfolio_holdings.csv   322        8           0               0
+    10_benchmark_indices.csv  8050        3           0               0
+
+Fund master category breakdown
+----------------------------------------------------------------------
+fund_house: {'SBI Mutual Fund': np.int64(5), 'HDFC Mutual Fund': np.int64(5), 'ICICI Prudential MF': np.int64(5), 'Nippon India MF': np.int64(5), 'Kotak Mahindra MF': np.int64(4), 'Axis Mutual Fund': np.int64(4), 'Aditya Birla Sun Life MF': np.int64(3), 'UTI Mutual Fund': np.int64(3), 'Mirae Asset MF': np.int64(3), 'DSP Mutual Fund': np.int64(3)}
+category: {'Equity': np.int64(34), 'Debt': np.int64(6)}
+sub_category: {'Large Cap': np.int64(14), 'Mid Cap': np.int64(7), 'Small Cap': np.int64(6), 'Liquid': np.int64(3), 'Gilt': np.int64(2), 'Flexi Cap': np.int64(2), 'Short Duration': np.int64(1), 'Value': np.int64(1), 'Index/ETF': np.int64(1), 'Index': np.int64(1), 'Large & Mid Cap': np.int64(1), 'ELSS': np.int64(1)}
+risk_category: {'Moderate': np.int64(16), 'High': np.int64(8), 'Very High': np.int64(6), 'Low': np.int64(6), 'Moderately High': np.int64(4)}
+sebi_category_code: {'EC01': np.int64(14), 'EC02': np.int64(7), 'EC03': np.int64(6), 'DC02': np.int64(3), 'DC01': np.int64(3), 'EC04': np.int64(3), 'EI01': np.int64(2), 'EC06': np.int64(1), 'EC05': np.int64(1)}
+
+AMFI code validation (fund_master <-> nav_history)
+----------------------------------------------------------------------
+- Unique AMFI codes in fund_master: 40
+- Unique AMFI codes in nav_history : 40
+- PASS: every fund_master AMFI code has NAV history.
+- PASS: every nav_history AMFI code exists in fund_master.
+- NAV rows per scheme -> min: 1150, max: 1150, mean: 1150.0
