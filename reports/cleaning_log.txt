@@ -1,0 +1,93 @@
+BLUESTOCK FINTECH - Day 2: Data Cleaning
+
+======================================================================
+Task 1: Cleaning 02_nav_history.csv
+======================================================================
+  Removed 0 exact duplicate row(s), 0 amfi_code+date duplicate(s).
+  Forward-filled 0 missing business-day NAV value(s) (0 expected for this dataset - it already covers every business day).
+  Rows: 46,000 raw -> 46,000 cleaned.
+
+======================================================================
+Task 2: Cleaning 08_investor_transactions.csv
+======================================================================
+  transaction_type standardised. Distribution:
+transaction_type
+SIP           19716
+Lumpsum        8095
+Redemption     4967
+  kyc_status enum check passed: only ['Pending', 'Verified'] present.
+  Removed 0 exact duplicate row(s).
+  Rows: 32,778 raw -> 32,778 cleaned.
+
+======================================================================
+Task 3: Cleaning 07_scheme_performance.csv
+======================================================================
+  All return/risk columns are numeric - no coercion needed.
+  Flagged 0 scheme(s) with negative Sharpe ratio (kept - negative Sharpe is a valid, if poor, outcome).
+  All expense_ratio_pct values fall within [0.1, 2.5]%.
+  Removed 0 duplicate amfi_code row(s).
+  Rows: 40 raw -> 40 cleaned.
+
+======================================================================
+Cleaning 01_fund_master.csv (baseline)
+======================================================================
+  Removed 0 exact duplicate row(s).
+  No nulls remaining.
+  Rows: 40 raw -> 40 cleaned.
+
+======================================================================
+Cleaning 03_aum_by_fund_house.csv (baseline)
+======================================================================
+  Removed 0 exact duplicate row(s).
+  No nulls remaining.
+  Rows: 90 raw -> 90 cleaned.
+
+======================================================================
+Cleaning 04_monthly_sip_inflows.csv (baseline)
+======================================================================
+  Removed 0 exact duplicate row(s).
+  Remaining nulls:
+yoy_growth_pct    12
+  Rows: 48 raw -> 48 cleaned.
+
+======================================================================
+Cleaning 05_category_inflows.csv (baseline)
+======================================================================
+  Removed 0 exact duplicate row(s).
+  No nulls remaining.
+  Rows: 144 raw -> 144 cleaned.
+
+======================================================================
+Cleaning 06_industry_folio_count.csv (baseline)
+======================================================================
+  Removed 0 exact duplicate row(s).
+  No nulls remaining.
+  Rows: 21 raw -> 21 cleaned.
+
+======================================================================
+Cleaning 09_portfolio_holdings.csv (baseline)
+======================================================================
+  Removed 0 exact duplicate row(s).
+  No nulls remaining.
+  Rows: 322 raw -> 322 cleaned.
+
+======================================================================
+Cleaning 10_benchmark_indices.csv (baseline)
+======================================================================
+  Removed 0 exact duplicate row(s).
+  No nulls remaining.
+  Rows: 8,050 raw -> 8,050 cleaned.
+
+======================================================================
+Writing cleaned CSVs to /home/claude/bluestock_mf_capstone/data/processed
+======================================================================
+  clean_02_nav_history.csv: 46,000 rows
+  clean_08_investor_transactions.csv: 32,778 rows
+  clean_07_scheme_performance.csv: 40 rows
+  clean_01_fund_master.csv: 40 rows
+  clean_03_aum_by_fund_house.csv: 90 rows
+  clean_04_monthly_sip_inflows.csv: 48 rows
+  clean_05_category_inflows.csv: 144 rows
+  clean_06_industry_folio_count.csv: 21 rows
+  clean_09_portfolio_holdings.csv: 322 rows
+  clean_10_benchmark_indices.csv: 8,050 rows

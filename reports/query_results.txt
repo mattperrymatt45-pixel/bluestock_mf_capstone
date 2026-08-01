@@ -1,0 +1,130 @@
+BLUESTOCK FINTECH - Day 2 Analytical Query Results
+==============================================================================
+
+Q1: Top 5 funds by AUM
+------------------------------------------------------------------------------
+                                          scheme_name        fund_house  aum_crore
+Mirae Asset Emerging Bluechip Fund - Regular - Growth    Mirae Asset MF      49046
+        Kotak Emerging Equity Fund - Regular - Growth Kotak Mahindra MF      47469
+       Nippon India Small Cap Fund - Regular - Growth   Nippon India MF      43630
+           DSP Top 100 Equity Fund - Regular - Growth   DSP Mutual Fund      41828
+                  UTI Mid Cap Fund - Regular - Growth   UTI Mutual Fund      41728
+(5 row(s) returned)
+
+Q2: Average NAV per month (all schemes combined)
+------------------------------------------------------------------------------
+ year  month  avg_nav
+ 2022      1   207.06
+ 2022      2   207.72
+ 2022      3   209.69
+ 2022      4   211.83
+ 2022      5   212.73
+ 2022      6   213.86
+ 2022      7   213.96
+ 2022      8   215.68
+ 2022      9   218.49
+ 2022     10   219.53
+(53 row(s) returned)
+
+Q3: SIP inflow YoY growth (industry level, by month)
+------------------------------------------------------------------------------
+  month  sip_inflow_crore  yoy_growth_pct
+2023-01             13856           20.31
+2023-02             13687           19.66
+2023-03             14276           15.80
+2023-04             14749           24.33
+2023-05             14749           20.05
+2023-06             14734           20.02
+2023-07             15245           25.58
+2023-08             15814           24.58
+2023-09             16042           23.63
+2023-10             16928           29.82
+(36 row(s) returned)
+
+Q4: Transactions by state (count + total amount)
+------------------------------------------------------------------------------
+         state  num_transactions  total_amount_inr
+        Punjab              2965         315780459
+    Tamil Nadu              2806         315177237
+Madhya Pradesh              2931         308312493
+     Rajasthan              2577         298645822
+       Gujarat              2780         298358940
+   West Bengal              2748         297182514
+     Telangana              2718         290219284
+         Delhi              2677         289633404
+ Uttar Pradesh              2695         285368873
+       Haryana              2736         279634354
+(12 row(s) returned)
+
+Q5: Funds with expense_ratio < 1%
+------------------------------------------------------------------------------
+                                         scheme_name          fund_house  expense_ratio_pct
+Nippon India Gilt Securities Fund - Regular - Growth     Nippon India MF               0.55
+        HDFC Short Term Debt Fund - Regular - Growth    HDFC Mutual Fund               0.56
+                Kotak Liquid Fund - Regular - Growth   Kotak Mahindra MF               0.60
+            SBI Bluechip Fund - Direct Plan - Growth     SBI Mutual Fund               0.66
+           SBI Small Cap Fund - Direct Plan - Growth     SBI Mutual Fund               0.72
+       Nippon India Large Cap Fund - Direct - Growth     Nippon India MF               0.72
+            ICICI Pru Liquid Fund - Regular - Growth ICICI Prudential MF               0.74
+                Axis Bluechip Fund - Direct - Growth    Axis Mutual Fund               0.75
+        SBI Magnum Gilt Fund - Regular Plan - Growth     SBI Mutual Fund               0.77
+   HDFC Mid-Cap Opportunities Fund - Direct - Growth    HDFC Mutual Fund               0.78
+(14 row(s) returned)
+
+Q6: Top 5 funds by Sharpe ratio (best risk-adjusted return)
+------------------------------------------------------------------------------
+                                 scheme_name               fund_house  sharpe_ratio  return_3yr_pct
+    ICICI Pru Liquid Fund - Regular - Growth      ICICI Prudential MF          7.68            7.68
+        Kotak Liquid Fund - Regular - Growth        Kotak Mahindra MF          6.18            6.18
+         ABSL Liquid Fund - Regular - Growth Aditya Birla Sun Life MF          5.14            5.14
+HDFC Short Term Debt Fund - Regular - Growth         HDFC Mutual Fund          1.84            7.37
+SBI Magnum Gilt Fund - Regular Plan - Growth          SBI Mutual Fund          1.52            6.07
+(5 row(s) returned)
+
+Q7: SIP vs Lumpsum vs Redemption split, overall
+------------------------------------------------------------------------------
+transaction_type  num_transactions  total_amount_inr  pct_of_transactions
+         Lumpsum              8095        2059821448                24.70
+      Redemption              4967        1244525491                15.15
+             SIP             19716         217233491                60.15
+(3 row(s) returned)
+
+Q8: Average SIP amount by age group
+------------------------------------------------------------------------------
+age_group  num_sip_transactions  avg_sip_amount_inr
+      56+                  1478             11575.0
+    46-55                  2300             11137.0
+    26-35                  8063             10987.0
+    18-25                  2949             10953.0
+    36-45                  4926             10886.0
+(5 row(s) returned)
+
+Q9: AUM growth by fund house, year over year (latest snapshot per year)
+------------------------------------------------------------------------------
+              fund_house  year  avg_aum_lakh_crore
+Aditya Birla Sun Life MF  2022                2.81
+Aditya Birla Sun Life MF  2023                2.92
+Aditya Birla Sun Life MF  2024                3.62
+Aditya Birla Sun Life MF  2025                4.22
+        Axis Mutual Fund  2022                2.45
+        Axis Mutual Fund  2023                2.50
+        Axis Mutual Fund  2024                2.90
+        Axis Mutual Fund  2025                3.30
+         DSP Mutual Fund  2022                1.11
+         DSP Mutual Fund  2023                1.23
+(40 row(s) returned)
+
+Q10: Sector concentration - top 10 stock holdings by total market value
+------------------------------------------------------------------------------
+             stock_name      sector  num_funds_holding  total_market_value_cr
+          Axis Bank Ltd     Banking                 12               16325.94
+      Bharti Airtel Ltd     Telecom                 15               16051.45
+Reliance Industries Ltd      Energy                 13               15286.54
+               NTPC Ltd   Utilities                 13               13951.43
+  Grasim Industries Ltd Diversified                 14               13897.79
+ Hindustan Unilever Ltd        FMCG                 11               12993.93
+Mahindra & Mahindra Ltd  Automobile                 10               12967.27
+   HCL Technologies Ltd          IT                 13               12299.86
+        Tata Motors Ltd  Automobile                 12               12296.77
+   UltraTech Cement Ltd      Cement                 12               11611.97
+(10 row(s) returned)
