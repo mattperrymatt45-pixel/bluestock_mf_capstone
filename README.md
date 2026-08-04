@@ -3,7 +3,7 @@
 Capstone project: end-to-end ETL pipeline, SQL data model, and interactive
 dashboard for Indian mutual fund data (AMFI / mfapi.in / NSE / BSE sources).
 
-> **Status:** Day 2 of 7 complete — data cleaning + SQL database design.
+> **Status:** Day 3 of 7 complete — exploratory data analysis.
 
 ## Data note
 
@@ -110,13 +110,49 @@ pip install -r requirements.txt
   `fact_benchmark`) load with row counts matching their source CSVs exactly.
 - See `data_dictionary.md` for full column-level documentation.
 
+## Day 3 — Exploratory Data Analysis (EDA)
+
+Open `notebooks/EDA_Analysis.ipynb` (or re-run it end to end):
+```bash
+jupyter nbconvert --to notebook --execute --inplace notebooks/EDA_Analysis.ipynb
+```
+Generates 16 charts (target: 15+) across 9 analysis areas — NAV trends,
+AUM growth, SIP inflows, category inflow heatmap, investor demographics,
+geographic distribution, folio growth, NAV return correlation, and sector
+allocation — plus a markdown summary of 10 key findings. All charts are
+saved as PNG to `notebooks/charts/` for the final report.
+
+### Day 3 findings (honest version)
+
+- **2023 was a genuine broad-based rally** (+15.7% average NAV across all
+  40 schemes) but **2024 was a slowdown, not a correction** — growth
+  continued, just more slowly (+4.1% in the back half), and the average
+  NAV series never drops more than ~1% from its running peak across the
+  full 4.5-year window. Individual funds do show real dips in that window
+  (see Chart 2), even though the aggregate stays positive.
+- SBI Mutual Fund holds the largest AUM among the 10 fund houses tracked
+  (Rs. 12.50 lakh crore, FY25), consistent with its real-world position.
+- SIP inflows peaked at their all-time high in December 2025.
+- SIP amounts are **fairly flat across age groups** (~6% spread, 56+
+  slightly ahead) — not the strong mid-career skew a first glance might
+  suggest.
+- Geographic SIP value is **fairly evenly spread across states**
+  (Rs. 1.6-2.1 Cr each) — no dominant outlier state in this dataset. T30
+  cities still hold 67% of investors vs. 33% B30.
+- **NAV return correlations across funds are near-zero, even within the
+  same category** (strongest pair: 0.07) — flagged as a data-generation
+  limitation rather than a real market pattern, since real large-cap
+  equity funds typically correlate 0.85+ via shared market beta.
+- Sector allocation is genuinely concentrated: Banking alone is ~19% of
+  aggregate portfolio value across all equity funds.
+
 ## Roadmap
 
 | Day | Focus |
 |---|---|
 | 1 | Project setup + data ingestion ✅ |
-| 2 | Data cleaning + SQL database design *(this)* |
-| 3 | Exploratory data analysis |
+| 2 | Data cleaning + SQL database design ✅ |
+| 3 | Exploratory data analysis *(this)* |
 | 4 | Fund performance & risk analytics |
 | 5 | Power BI / Tableau dashboard |
 | 6 | Advanced analytics + risk metrics |
