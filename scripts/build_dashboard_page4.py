@@ -11,12 +11,14 @@ Usage:
     python scripts/build_dashboard_page4.py
 """
 import sys
-sys.path.insert(0, "/home/claude/bluestock_mf_capstone/scripts")
+from pathlib import Path
+PROJECT_ROOT_PATH = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT_PATH / "scripts"))
 from dashboard_style import *
 import pandas as pd
 import numpy as np
 
-PROJECT_ROOT = "/home/claude/bluestock_mf_capstone"
+PROJECT_ROOT = str(PROJECT_ROOT_PATH)
 PROC = f"{PROJECT_ROOT}/data/processed"
 OUT = f"{PROJECT_ROOT}/dashboard/pages"
 

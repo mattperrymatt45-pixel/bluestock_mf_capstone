@@ -3,6 +3,9 @@ Builds notebooks/EDA_Analysis.ipynb for Day 3 (Exploratory Data Analysis).
 Run this, then execute the notebook with nbconvert.
 """
 import nbformat as nbf
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 nb = nbf.v4.new_notebook()
 cells = []
@@ -505,5 +508,5 @@ md("""---
 """)
 
 nb['cells'] = cells
-nbf.write(nb, "/home/claude/bluestock_mf_capstone/notebooks/EDA_Analysis.ipynb")
+nbf.write(nb, str(PROJECT_ROOT / "notebooks" / "EDA_Analysis.ipynb"))
 print("Notebook written.")

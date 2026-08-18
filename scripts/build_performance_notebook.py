@@ -3,6 +3,9 @@ Builds notebooks/Performance_Analytics.ipynb for Day 4 (Fund Performance Analyti
 Run this, then execute the notebook with nbconvert.
 """
 import nbformat as nbf
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 nb = nbf.v4.new_notebook()
 cells = []
@@ -462,5 +465,5 @@ supporting files `returns_computed.csv`, `cagr_report.csv`,
 """)
 
 nb['cells'] = cells
-nbf.write(nb, "/home/claude/bluestock_mf_capstone/notebooks/Performance_Analytics.ipynb")
+nbf.write(nb, str(PROJECT_ROOT / "notebooks" / "Performance_Analytics.ipynb"))
 print("Notebook written.")

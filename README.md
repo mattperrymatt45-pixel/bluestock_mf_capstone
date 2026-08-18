@@ -285,6 +285,15 @@ deliverables: `alpha_beta.csv`, `fund_scorecard.csv`, and
   40 funds) despite the Alpha weakness above, since 3 of its 5 weighted
   components (3yr return, expense ratio, max drawdown) don't depend on
   the benchmark regression.
+- **Known issue, caught late (Day 7 rubric self-audit) and left
+  unresolved rather than partially patched:** CAGR here is annualised
+  using calendar days (`.days / 365.25`) instead of trading-day count /
+  252 as the project brief specifies — exactly the mistake the brief
+  warns against. Fixing it would shift the 3-year CAGR figures that feed
+  30% of the Fund Scorecard weighting, cascading into the scorecard CSV,
+  the final report, and the presentation deck. Documented as a known
+  limitation in `reports/Final_Report.pdf` (Section 8.4) rather than
+  fixed in only one of the four places the affected numbers appear.
 
 ## Day 5 — Dashboard (Power BI)
 

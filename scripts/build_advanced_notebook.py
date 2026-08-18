@@ -3,6 +3,9 @@ Builds notebooks/Advanced_Analytics.ipynb for Day 6 (Advanced Analytics + Risk M
 Run this, then execute the notebook with nbconvert.
 """
 import nbformat as nbf
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 nb = nbf.v4.new_notebook()
 cells = []
@@ -351,5 +354,5 @@ plus supporting files `investor_cohort_analysis.csv`,
 """)
 
 nb['cells'] = cells
-nbf.write(nb, "/home/claude/bluestock_mf_capstone/notebooks/Advanced_Analytics.ipynb")
+nbf.write(nb, str(PROJECT_ROOT / "notebooks" / "Advanced_Analytics.ipynb"))
 print("Notebook written.")
