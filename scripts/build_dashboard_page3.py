@@ -1,3 +1,16 @@
+"""
+Bluestock Fintech - Mutual Fund Analytics Platform
+Day 5: Dashboard Page 3 - Investor Analytics (mockup)
+
+Builds a Power-BI-style Page 3 as a static PNG: transaction amount by
+state, a transaction-type donut, average SIP amount by age group, and
+monthly transaction volume by type — all from the cleaned investor
+transactions data. See dashboard/POWER_BI_BUILD_GUIDE.md to reproduce this
+as a real Power BI page.
+
+Usage:
+    python scripts/build_dashboard_page3.py
+"""
 import sys
 sys.path.insert(0, "/home/claude/bluestock_mf_capstone/scripts")
 from dashboard_style import *
@@ -53,5 +66,5 @@ ax4.legend(fontsize=8, loc="center left", frameon=False)
 ax4.tick_params(labelsize=8)
 ax4.grid(alpha=0.25)
 
-fig.savefig(f"{OUT}/page3_investor_analytics.png", dpi=150, bbox_inches=None, facecolor="white")
-print("Saved page3_investor_analytics.png")
+fig.savefig(f"{OUT}/Dashboard_Page3_InvestorAnalytics.png", dpi=150, bbox_inches=None, facecolor="white")
+print("Saved Dashboard_Page3_InvestorAnalytics.png")

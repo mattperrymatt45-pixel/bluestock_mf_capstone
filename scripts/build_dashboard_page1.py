@@ -1,3 +1,17 @@
+"""
+Bluestock Fintech - Mutual Fund Analytics Platform
+Day 5: Dashboard Page 1 - Industry Overview (mockup)
+
+Builds a Power-BI-style Page 1 as a static PNG using matplotlib, since
+Power BI Desktop is not available in this environment. Renders KPI cards
+(Total AUM, SIP Inflow, Folios, Schemes), an industry AUM trend line, an
+AUM-by-fund-house bar chart, and folio/SIP mini trend charts, all from the
+real cleaned data in data/processed/. See dashboard/POWER_BI_BUILD_GUIDE.md
+for how to reproduce this page as an actual interactive Power BI report.
+
+Usage:
+    python scripts/build_dashboard_page1.py
+"""
 import sys
 sys.path.insert(0, "/home/claude/bluestock_mf_capstone/scripts")
 from dashboard_style import *
@@ -62,5 +76,5 @@ ax4.set_ylabel("SIP Inflow (Rs. Cr)", fontsize=8.5)
 ax4.tick_params(labelsize=8)
 ax4.grid(alpha=0.25)
 
-fig.savefig(f"{OUT}/page1_industry_overview.png", dpi=150, bbox_inches=None, facecolor="white")
-print("Saved page1_industry_overview.png")
+fig.savefig(f"{OUT}/Dashboard_Page1_IndustryOverview.png", dpi=150, bbox_inches=None, facecolor="white")
+print("Saved Dashboard_Page1_IndustryOverview.png")

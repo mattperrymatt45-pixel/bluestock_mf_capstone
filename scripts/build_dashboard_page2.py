@@ -1,3 +1,16 @@
+"""
+Bluestock Fintech - Mutual Fund Analytics Platform
+Day 5: Dashboard Page 2 - Fund Performance (mockup)
+
+Builds a Power-BI-style Page 2 as a static PNG: a return-vs-risk bubble
+scatter (bubble size = AUM), a NAV-vs-Nifty-100 line chart for the top
+scorecard fund, and a sortable-in-Power-BI fund scorecard table — all
+sourced from the Day 4 performance analytics outputs. See
+dashboard/POWER_BI_BUILD_GUIDE.md to reproduce this as a real Power BI page.
+
+Usage:
+    python scripts/build_dashboard_page2.py
+"""
 import sys
 sys.path.insert(0, "/home/claude/bluestock_mf_capstone/scripts")
 from dashboard_style import *
@@ -74,5 +87,5 @@ for (row, col), cell in tbl.get_celld().items():
     else:
         cell.set_facecolor("#F8F9FB" if row % 2 == 0 else "white")
 
-fig.savefig(f"{OUT}/page2_fund_performance.png", dpi=150, bbox_inches=None, facecolor="white")
-print("Saved page2_fund_performance.png")
+fig.savefig(f"{OUT}/Dashboard_Page2_FundPerformance.png", dpi=150, bbox_inches=None, facecolor="white")
+print("Saved Dashboard_Page2_FundPerformance.png")

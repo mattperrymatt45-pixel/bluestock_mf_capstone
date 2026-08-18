@@ -1,3 +1,15 @@
+"""
+Bluestock Fintech - Mutual Fund Analytics Platform
+Day 5: Dashboard Page 4 - SIP & Market Trends (mockup)
+
+Builds a Power-BI-style Page 4 as a static PNG: a dual-axis SIP inflow vs
+Nifty 50 chart, top 5 categories by FY25 net inflow, and a category inflow
+heatmap — all from the cleaned SIP/category datasets. See
+dashboard/POWER_BI_BUILD_GUIDE.md to reproduce this as a real Power BI page.
+
+Usage:
+    python scripts/build_dashboard_page4.py
+"""
 import sys
 sys.path.insert(0, "/home/claude/bluestock_mf_capstone/scripts")
 from dashboard_style import *
@@ -57,5 +69,5 @@ for i in range(cat_pivot.shape[0]):
 cbar = fig.colorbar(im, ax=ax3, fraction=0.02, pad=0.01)
 cbar.ax.tick_params(labelsize=7)
 
-fig.savefig(f"{OUT}/page4_sip_market_trends.png", dpi=150, bbox_inches=None, facecolor="white")
-print("Saved page4_sip_market_trends.png")
+fig.savefig(f"{OUT}/Dashboard_Page4_SIPMarketTrends.png", dpi=150, bbox_inches=None, facecolor="white")
+print("Saved Dashboard_Page4_SIPMarketTrends.png")

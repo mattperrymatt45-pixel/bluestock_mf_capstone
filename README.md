@@ -1,43 +1,138 @@
 # Bluestock Fintech — Mutual Fund Analytics Platform
 
-Capstone project: end-to-end ETL pipeline, SQL data model, and interactive
-dashboard for Indian mutual fund data (AMFI / mfapi.in / NSE / BSE sources).
+An end-to-end data engineering, analytics, and BI capstone project for
+Bluestock Fintech: a Python ETL pipeline ingests and cleans 10 AMFI-sourced
+mutual fund datasets, loads them into a SQLite star schema, computes
+performance and risk metrics (Sharpe, Sortino, Alpha/Beta, VaR/CVaR, Fund
+Scorecard), and presents the results through Jupyter notebooks and a
+4-page BI dashboard.
 
-> **Status:** Day 6 of 7 complete — advanced analytics + risk metrics.
+> **Status:** Complete (Day 7 of 7) — final report, presentation, and project cleanup done.
 
-## Data note
+## Project overview
 
-The 10 source CSVs (`data/raw/`) were provided directly for this project.
-Per the project brief, NAV values are anchored to real AMFI/mfapi.in figures
-and investor transaction data is synthetically generated using realistic
-Indian MF market distributions. See the capstone PDF, Appendix 8, for the
-full schema reference and data-authenticity note.
+| | |
+|---|---|
+| **Domain** | Mutual Fund / Fintech analytics |
+| **Scope** | 40 real mutual fund schemes, ~46,000 NAV rows, ~32,800 investor transactions, 4.4 years of history (Jan 2022 - May 2026) |
+| **Pipeline** | Extract (provided CSVs) → Clean → Load (SQLite star schema) → Analyse (Jupyter) → Visualise (dashboard) |
+| **Stack** | Python (Pandas, NumPy, SciPy), SQLite + SQLAlchemy, Matplotlib/Seaborn/Plotly, Power BI (build guide provided) |
+| **Deliverables** | ETL scripts, SQLite DB, 3 Jupyter notebooks, 4-page dashboard, `Final_Report.pdf`, `Bluestock_MF_Presentation.pptx` |
 
-## Folder structure
+**Data note:** the 10 source CSVs (`data/raw/`) were provided directly for
+this project. Per the project brief, NAV values are anchored to real
+AMFI/mfapi.in figures and investor transaction data is synthetically
+generated using realistic Indian MF market distributions. See
+`data_dictionary.md` for the full column-level schema reference.
 
-```
-bluestock_mf_capstone/
-├── data/
-│   ├── raw/            # Original 10 CSVs + live/ (mfapi.in pulls)
-│   ├── processed/       # Cleaned/merged CSVs (Day 2+)
-│   └── db/              # bluestock_mf.db (SQLite, Day 2+)
-├── notebooks/            # EDA / analytics notebooks (Day 3+)
-├── scripts/
-│   ├── data_ingestion.py    # Day 1: load & inspect all 10 CSVs
-│   └── live_nav_fetch.py    # Day 1: pull live NAV from mfapi.in
-├── sql/                  # schema.sql, queries.sql (Day 2+)
-├── dashboard/             # Power BI / Tableau file (Day 5+)
-├── reports/               # data_quality_report.txt, Final_Report.pdf
-└── requirements.txt
-```
-
-## Setup
+## Quick start
 
 ```bash
 python -m venv venv
 source venv/bin/activate      # Windows: venv\Scripts\activate
 pip install -r requirements.txt
+python run_pipeline.py         # runs the full ETL pipeline end to end
 ```
+
+`run_pipeline.py` runs, in order: data ingestion → cleaning → SQLite load →
+SQL query verification → dashboard mockup regeneration. It excludes the
+three notebook-based analysis stages (EDA, Performance Analytics, Advanced
+Analytics) by default since re-executing a full notebook every pipeline
+run is slow and their outputs are already committed — see
+[Running the notebooks](#running-the-notebooks) below to rebuild them.
+
+```bash
+python run_pipeline.py --only clean    # run a single stage
+python run_pipeline.py --skip-db       # skip the SQLite rebuild
+```
+
+## Running the notebooks
+
+Each notebook can be rebuilt from scratch (regenerates its build script's
+output, then re-executes):
+
+```bash
+python scripts/build_eda_notebook.py && \
+    jupyter nbconvert --to notebook --execute --inplace notebooks/EDA_Analysis.ipynb
+
+python scripts/build_performance_notebook.py && \
+    jupyter nbconvert --to notebook --execute --inplace notebooks/Performance_Analytics.ipynb
+
+python scripts/build_advanced_notebook.py && \
+    jupyter nbconvert --to notebook --execute --inplace notebooks/Advanced_Analytics.ipynb
+```
+
+Or just open them directly in Jupyter Lab/VS Code to read the pre-executed
+outputs without re-running anything.
+
+## Opening the dashboard
+
+This environment doesn't have Power BI Desktop installed, so the
+dashboard is delivered as:
+
+- **`dashboard/pages/Dashboard_Page1-4_*.png`** — 4 dashboard-style page
+  mockups (Industry Overview, Fund Performance, Investor Analytics, SIP &
+  Market Trends), rendered from the real project data.
+- **`dashboard/Dashboard.pdf`** — all 4 pages combined.
+- **`dashboard/POWER_BI_BUILD_GUIDE.md`** — a complete, step-by-step guide
+  to build the real interactive `bluestock_mf_dashboard.pbix` in Power BI
+  Desktop (data connections, relationships, DAX measures, chart-by-chart
+  instructions, theme, drill-through/tooltips, export) — roughly
+  30-45 minutes since all underlying data work is already done.
+
+## Dataset descriptions
+
+10 datasets, all in `data/raw/` (originals) and `data/processed/` (cleaned,
+prefixed `clean_`). Full column-level definitions, types, and source
+references are in **`data_dictionary.md`** — short summary:
+
+| # | Dataset | Rows | Contents |
+|---|---|---|---|
+| 01 | `fund_master.csv` | 40 | Scheme master: AMFI code, fund house, category, expense ratio, risk grade |
+| 02 | `nav_history.csv` | 46,000 | Daily NAV per scheme, Jan 2022 - May 2026 |
+| 03 | `aum_by_fund_house.csv` | 90 | Quarterly AUM per fund house, 2022-2025 |
+| 04 | `monthly_sip_inflows.csv` | 48 | Industry-wide monthly SIP inflow, accounts, YoY growth |
+| 05 | `category_inflows.csv` | 144 | Net inflow by fund category, FY 2024-25 |
+| 06 | `industry_folio_count.csv` | 21 | Total investor folios by fund type |
+| 07 | `scheme_performance.csv` | 40 | Pre-computed return/risk metrics (reference only — see Day 4 note) |
+| 08 | `investor_transactions.csv` | 32,778 | SIP/Lumpsum/Redemption transactions, 5,000 investors |
+| 09 | `portfolio_holdings.csv` | 322 | Top equity holdings per fund, as of Dec 2025 |
+| 10 | `benchmark_indices.csv` | 8,050 | Daily closing values, Nifty 50/100/Midcap150, BSE SmallCap, CRISIL Liquid/Gilt |
+
+## Folder structure
+
+```
+bluestock_mf_capstone/
+├── run_pipeline.py         # master pipeline runner (Day 7)
+├── data/
+│   ├── raw/                 # Original 10 CSVs + live/ (mfapi.in pulls)
+│   ├── processed/            # Cleaned CSVs (Day 2)
+│   └── db/                   # bluestock_mf.db (SQLite, Day 2)
+├── notebooks/
+│   ├── EDA_Analysis.ipynb            # Day 3
+│   ├── Performance_Analytics.ipynb    # Day 4
+│   ├── Advanced_Analytics.ipynb       # Day 6
+│   └── charts/                        # Day 3 exported PNGs
+├── scripts/                # all ETL / build scripts (see docstrings)
+├── sql/                     # schema.sql, queries.sql (Day 2)
+├── dashboard/                # dashboard mockups + Power BI build guide (Day 5)
+├── reports/
+│   ├── performance_analytics/   # Day 4 outputs (scorecard, alpha_beta, etc.)
+│   ├── advanced_analytics/       # Day 6 outputs (VaR, HHI, recommender data)
+│   ├── Final_Report.pdf          # Day 7
+│   └── *.txt                     # data quality / cleaning / query logs
+├── Bluestock_MF_Presentation.pptx  # Day 7
+├── data_dictionary.md
+└── requirements.txt
+```
+
+---
+
+# Development Log (Day 1-6)
+
+The sections below are the day-by-day build log, kept for traceability —
+each documents what was built, how to run it, and what the data actually
+showed (including a few honest surprises along the way).
 
 ## Day 1 — Project Setup + Data Ingestion
 
@@ -274,6 +369,48 @@ as a deliberate simple design choice in the script's docstring).
   with no fund showing dangerous single-stock concentration in this
   dataset — see `sector_hhi_chart.png` for the full ranking.
 
+## Day 7 — Final Report, Presentation & Cleanup
+
+- **`reports/Final_Report.pdf`** (15-20 pages) — Executive Summary, Data
+  Sources, ETL Design, EDA Findings, Performance Analysis, Dashboard
+  Screenshots, Limitations, Recommendations.
+- **`Bluestock_MF_Presentation.pptx`** (12 slides) — title, problem &
+  objective, data sources, architecture, EDA highlights (x2), performance
+  metrics (x2), dashboard screenshots (x2), key findings, thank you.
+- **`run_pipeline.py`** — master script that runs the ETL pipeline end to
+  end in one command (see Quick Start above).
+- All scripts reviewed for stray debug output and missing docstrings — see
+  each script's module docstring for what it does and how to run it
+  standalone.
+- **GitHub push:** this project was built and iterated in a sandboxed
+  environment without push access to a real GitHub remote. The repo is
+  fully committed locally with a clean history and tagged `v1.0`. To
+  publish it:
+  ```bash
+  git remote add origin https://github.com/<your-username>/<your-repo>.git
+  git branch -M main
+  git push -u origin main --tags
+  ```
+- **Publishing the dashboard (optional):** since this environment has no
+  Power BI Desktop, the `.pbix` itself needs to be built locally first
+  (see `dashboard/POWER_BI_BUILD_GUIDE.md`), then published via Power BI
+  Service (File → Publish) or exported to Tableau Public. Add the
+  resulting share URL here once published: `[dashboard URL - pending]`.
+
+### Self-review checklist
+
+| Check | Status |
+|---|---|
+| All 8 project objectives met (O1-O8, see capstone brief) | ✅ |
+| All 7 daily deliverable sets submitted (Day 1-7) | ✅ |
+| Code runs without errors (`python run_pipeline.py`) | ✅ verified this session |
+| All 3 notebooks execute end-to-end with zero errors | ✅ verified Day 3/4/6 |
+| Dashboard pages render correctly | ✅ (mockups; real `.pbix` pending manual build — see note above) |
+| Report is 15-20 pages, professional formatting | ✅ see `reports/Final_Report.pdf` |
+| Presentation is 12 slides | ✅ see `Bluestock_MF_Presentation.pptx` |
+| `.gitignore` excludes `*.db` and other large/generated files | ✅ |
+| Git history is clean and tagged `v1.0` | ✅ (see note above on push) |
+
 ## Roadmap
 
 | Day | Focus |
@@ -283,8 +420,8 @@ as a deliberate simple design choice in the script's docstring).
 | 3 | Exploratory data analysis ✅ |
 | 4 | Fund performance & risk analytics ✅ |
 | 5 | Power BI / Tableau dashboard ✅ |
-| 6 | Advanced analytics + risk metrics *(this)* |
-| 7 | Final report + presentation |
+| 6 | Advanced analytics + risk metrics ✅ |
+| 7 | Final report + presentation ✅ |
 
 ## Disclaimer
 
